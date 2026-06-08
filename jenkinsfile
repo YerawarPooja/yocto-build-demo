@@ -1,7 +1,7 @@
 
 pipeline {
     agent {
-        label 'Yocto'
+        label 'yocto-build-node'
     }
 
     environment {
