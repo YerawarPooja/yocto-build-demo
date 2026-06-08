@@ -39,24 +39,8 @@ pipeline {
 
     post {
         always {
-            // Archive the CSV
-            archiveArtifacts artifacts: 'yocto_usage.csv', fingerprint: true
 
-            // Plot CPU
-            plot csvFileName: 'yocto_cpu_plot.csv',
-            group: 'Yocto Build Metrics',
-            title: 'Yocto CPU Usage',
-            style: 'line',
-            yaxis: 'CPU (%)',
-            csvSeries: [[file: 'yocto_usage.csv', inclusionFlag: 'INCLUDE_BY_COLUMN', url: '', displayTableFlag: false]]
-
-            // Plot Memory
-            plot csvFileName: 'yocto_mem_plot.csv',
-            group: 'Yocto Build Metrics',
-             title: 'Yocto Memory Usage',
-             style: 'line',
-             yaxis: 'Memory (%)',
-             csvSeries: [[file: 'yocto_usage.csv', inclusionFlag: 'INCLUDE_BY_COLUMN', url: '', displayTableFlag: false]]
+           
             cleanWs()
         }
         success {
