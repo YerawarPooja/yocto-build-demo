@@ -17,6 +17,7 @@ pipeline {
                     echo "Cloning Poky repository..."
 
                     dir("${WORKSPACE}") {
+                        git branch: 'main', url: 'https://github.com/YerawarPooja/yocto-build-demo.git'
                         git branch: 'kirkstone', url: 'https://git.yoctoproject.org/git/poky'
                     }  
                 }
