@@ -6,7 +6,6 @@ pipeline {
 
     options {
         timeout(time: 4, unit: 'HOURS')
-        skipDefaultCheckout()
         timestamps ()
     }
 
