@@ -38,11 +38,11 @@ pipeline {
     }
 
     post {
-        always {
+      /*  always {
 
            
             cleanWs()
-        }
+        } */
         success {
             echo "Yocto image build SUCCEEDED!"
 
