@@ -23,7 +23,7 @@ pipeline {
                     dir("${WORKSPACE}/customlayer") {
                         git branch: 'main', url: 'https://github.com/YerawarPooja/yocto-build-demo.git'
                         sh """
-                        cp -r ${WORKSPACE}/customlayermeta-myhelloworld /home/ubuntu/workspace/yocto-helloworld/
+                        cp -r ${WORKSPACE}/customlayer/meta-myhelloworld /home/ubuntu/workspace/yocto-helloworld/
                         """
                     }  
                 }
