@@ -44,7 +44,7 @@ pipeline {
                     sh """
                     export TEMPLATECONF="${WORKSPACE}/poky/meta-myhelloworld/template/default"
                     cd poky 
-                    source oe-init-build-env
+                    . oe-init-build-env
                     bitbake core-image-minimal
                     """
                 }
