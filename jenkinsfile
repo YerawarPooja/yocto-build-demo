@@ -41,12 +41,13 @@ pipeline {
         stage('Configure Build Environment and Build Image') {
             steps {
                 script {
-                 sh '''
-                    #!/bin/bash
+                    sh '''
+                    bash -c "
                     export TEMPLATECONF=${WORKSPACE}/poky/meta-myhelloworld/template/default
-                    cd ${WORKSPACE}/poky
-                    . ./oe-init-build-env build
-                    bitbake core-image-minimal                  
+                    cd poky
+                    source oe-init-build-env build
+                    bitbake core-image-minimal
+                    "
                     '''
                 }
             }
