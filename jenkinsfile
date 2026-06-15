@@ -15,10 +15,9 @@ pipeline {
             steps {
                 script {
                     echo "Cloning Poky repository..."
-
+                    mkdir customlayer
                     dir("${WORKSPACE}") {                      
                         git branch: 'kirkstone', url: 'https://git.yoctoproject.org/git/poky'
-                        mkdir customlayer
                     }  
                     dir("${WORKSPACE}/customlayer") {
                         git branch: 'main', url: 'https://github.com/YerawarPooja/yocto-build-demo.git'
