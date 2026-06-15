@@ -18,13 +18,9 @@ pipeline {
 
                     dir("${WORKSPACE}") {                      
                         git branch: 'kirkstone', url: 'https://git.yoctoproject.org/git/poky'
-                        sh """
-                        cp -r /tmp/meta-myhelloworld /home/ubuntu/workspace/yocto-helloworld/
-                        """
-                    }  
-                    dir("${WORKSPACE}") {
                         mkdir customlayer
-                        cd customlayer 
+                    }  
+                    dir("${WORKSPACE}/customlayer") {
                         git branch: 'main', url: 'https://github.com/YerawarPooja/yocto-build-demo.git'
                         sh """
                         cp -r ${WORKSPACE}/customlayermeta-myhelloworld /home/ubuntu/workspace/yocto-helloworld/
