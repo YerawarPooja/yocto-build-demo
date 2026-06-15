@@ -14,17 +14,26 @@ pipeline {
         stage('Clone Repositories') {
             steps {
                 script {
+        
+                    sh 'mkdir -p customlayer'
+        
                     echo "Cloning Poky repository..."
-                    mkdir customlayer
-                    dir("${WORKSPACE}") {                      
-                        git branch: 'kirkstone', url: 'https://git.yoctoproject.org/git/poky'
-                    }  
+        
+                    dir("${WORKSPACE}/poky") {
+                        git branch: 'kirkstone',
+                            url: 'https://git.yoctoproject.org/git/poky'
+                    }
+        
+                    echo "Cloning custom layer repository..."
+        
                     dir("${WORKSPACE}/customlayer") {
-                        git branch: 'main', url: 'https://github.com/YerawarPooja/yocto-build-demo.git'
+                        git branch: 'main',
+                            url: 'https://github.com/YerawarPooja/yocto-build-demo.git'
+        
                         sh """
-                        cp -r ${WORKSPACE}/customlayer/meta-myhelloworld /home/ubuntu/workspace/yocto-helloworld/
+                            cp -r meta-myhelloworld ${WORKSPACE}/poky/
                         """
-                    }  
+                    }
                 }
             }
         }
