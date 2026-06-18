@@ -108,7 +108,7 @@ pipeline {
                 sh '''
                 DEPLOY_DIR="build/tmp/deploy/images/qemux86-64"
                 RELEASE="v${BUILD_NUMBER}"
-        
+                cd poky
                 aws s3 sync \
                     ${DEPLOY_DIR}/ \
                     s3://yocto-release-artifacts/releases/${RELEASE}/
