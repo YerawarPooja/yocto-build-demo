@@ -11,7 +11,7 @@ pipeline {
 
     stages {
 
-        stage('Clone Repositories') {
+      /*  stage('Clone Repositories') {
             steps {
                 script {
         
@@ -48,6 +48,56 @@ pipeline {
                     source oe-init-build-env build
                     bitbake core-image-minimal
                     "
+                    '''
+                }
+            }
+        } */
+
+        stage('Sign Artifact') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'yocto-passphrase', variable: 'GPG_PASSPHRASE')
+                ]) {
+                    sh '''
+                    #!/bin/bash -e
+                    cd poky
+                    ARTIFACT="build/tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.tar.bz2"
+        
+                    echo "===== Verifying Artifact Exists ====="
+                    if [ ! -f "$ARTIFACT" ]; then
+                        echo "ERROR: Artifact not found: $ARTIFACT"
+                        exit 1
+                    fi
+        
+                    ls -lh "$ARTIFACT"
+        
+                    echo "===== Signing Artifact ====="
+                    gpg --batch \
+                        --yes \
+                        --pinentry-mode loopback \
+                        --passphrase "$GPG_PASSPHRASE" \
+                        --detach-sign \
+                        --armor \
+                        "$ARTIFACT"
+        
+                    SIG_FILE="${ARTIFACT}.asc"
+        
+                    echo "===== Verifying Signature File ====="
+                    if [ ! -f "$SIG_FILE" ]; then
+                        echo "ERROR: Signature file was not generated."
+                        exit 1
+                    fi
+        
+                    ls -lh "$SIG_FILE"
+        
+                    echo "===== Verifying GPG Signature ====="
+                    gpg --verify "$SIG_FILE" "$ARTIFACT"
+        
+                    echo "===== SHA256 Checksums ====="
+                    sha256sum "$ARTIFACT"
+                    sha256sum "$SIG_FILE"
+        
+                    echo "Artifact signing and verification completed successfully."
                     '''
                 }
             }
