@@ -51,7 +51,7 @@ pipeline {
                     '''
                 }
             }
-        } */
+        } 
 
         stage('Sign Artifact') {
             steps {
@@ -100,6 +100,19 @@ pipeline {
                     echo "Artifact signing and verification completed successfully."
                     '''
                 }
+            }
+        } */
+
+        stage('Upload Artifacts to S3') {
+            steps {
+                sh '''
+                DEPLOY_DIR="build/tmp/deploy/images/qemux86-64"
+                RELEASE="v${BUILD_NUMBER}"
+        
+                aws s3 sync \
+                    ${DEPLOY_DIR}/ \
+                    s3://yocto-release-artifacts/releases/${RELEASE}/
+                '''
             }
         }
     }
