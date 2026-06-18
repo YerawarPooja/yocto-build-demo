@@ -111,7 +111,7 @@ pipeline {
                 cd poky
                 aws s3 sync \
                     ${DEPLOY_DIR}/ \
-                    s3://yocto-release-artifacts/releases/${RELEASE}/
+                    s3://yocto-demo-artifacts/releases/${RELEASE}/
                 '''
             }
         }
